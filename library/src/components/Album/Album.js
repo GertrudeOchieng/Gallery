@@ -1,43 +1,41 @@
 import React, { Component } from 'react';
-import Photo from './Photo';
-import './styles.css';
+
+import Photo from '../Photo';
+import { Container } from './Album.styles';
 
 class Album extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      photos: []
-    }
+      photos: [],
+    };
   }
-
-
 
   componentDidMount() {
     const photos = fetch('https://picsum.photos/v2/list')
       .then(response => response.json())
       .then(data => this.setState({ photos: data }));
-      console.log(photos);
-
+    console.log(photos);
   }
 
   render() {
-    console.log(this.state);
+    const { photos } = this.state;
 
     return (
-      <div className='album'>
+      <Container>
         {
-          this.state.photos.map((pic) => {
+          photos.map((pic) => {
             return (
               <Photo
-                author = {pic.author}
-                image = {pic.download_url}
-                key = {pic.id}
+                author={pic.author}
+                image={pic.download_url}
+                key={pic.id}
               />
             );
           })
         }
-      </div>
+      </Container>
     );
   }
 }
